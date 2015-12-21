@@ -1,0 +1,25 @@
+#commissionPotential, #currentCommission, #paidCommissions {
+  position: relative; }
+  #commissionPotential md-card, #currentCommission md-card, #paidCommissions md-card {
+    position: relative;
+    background: #f7f7f7;
+    border-radius: 3px;
+    height: 300px; }
+    #commissionPotential md-card .label, #currentCommission md-card .label, #paidCommissions md-card .label {
+      position: absolute;
+      bottom: 12px;
+      left: 12px; }
+
+#paidCommissions md-card {
+  height: 120px; }
+
+.border-bottom {
+  border-bottom: 1px solid black; }
+
+.align-left {
+  text-align: left; }
+
+.align-right {
+  text-align: right; }
+
+/*# sourceMappingURL=sales-panel-pay.css.map */

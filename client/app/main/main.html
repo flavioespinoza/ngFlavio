@@ -1,0 +1,68 @@
+<md-content>
+
+  <md-toolbar class="md-accent">
+    <div class="md-toolbar-tools">
+      <h2>
+        <span>Sales Panel Pay</span>
+      </h2>
+    </div>
+  </md-toolbar>
+
+  <section id="commissionPotential" layout="row">
+
+    <md-card flex="50" class="md-padding">
+      <svg class="graph"></svg>
+      <div class="label">Commission Potential</div>
+    </md-card>
+
+    <md-card flex="50" class="md-padding">
+      <div class="label">Quarterly Bonus So Far</div>
+    </md-card>
+
+  </section>
+
+  <section id="currentCommission" layout="row">
+
+    <md-card flex="100" class="md-padding">
+      <div class="label">Current Commission</div>
+    </md-card>
+
+  </section>
+
+  <section id="paidCommissions" layout="row" ng-repeat="c in pastPaymentsList | orderBy: 'PayPeriod': true">
+
+
+    <md-card flex="100" class="md-padding">
+      <div layout="row">
+        <div flex></div>
+        <div flex class="align-left">Adj</div>
+        <div flex class="align-right">{{c.PaymentTotals.Adj | number:2}}</div>
+      </div>
+
+      <div layout="row">
+        <div flex></div>
+        <div flex class="align-left">First</div>
+        <div flex class="align-right">{{c.PaymentTotals.First | number:2}}</div>
+      </div>
+
+      <div layout="row">
+        <div flex></div>
+        <div flex class="align-left border-bottom">Final</div>
+        <div flex class="align-right border-bottom">{{c.PaymentTotals.Final | number:2}}</div>
+      </div>
+
+      <div layout="row">
+        <div flex></div>
+
+        <div flex class="align-left">Grand Total</div>
+        <div flex class="align-right">{{c.PaymentTotals.GrandTotal | number:2}}</div>
+      </div>
+
+      <div class="label">{{c.PayPeriod | date:'MMM d, yyyy'}}</div>
+    </md-card>
+
+  </section>
+
+</md-content>
+
+
