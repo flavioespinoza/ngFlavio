@@ -15,7 +15,6 @@ app.controller('MainCtrl', function ($scope, $http, $mdDialog, pastPayChecks) {
 
   $scope.pastPaymentsList = [];
 
-
   pastPayChecks.getCurrentCommissionDetails(activeSalesRepId)
     .then(function (res) {
       $scope.currentCommissionDetails = res.data;
