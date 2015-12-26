@@ -5,7 +5,8 @@ angular.module('ngFlavApp', [
   'ngResource',
   'ngSanitize',
   'ui.router',
-  'ngMaterial'
+  'ngMaterial',
+  'wt.responsive'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
     $urlRouterProvider

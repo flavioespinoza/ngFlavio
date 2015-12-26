@@ -4,22 +4,72 @@
     position: relative;
     background: #f7f7f7;
     border-radius: 3px;
-    height: 300px; }
+    height: 120px; }
     #commissionPotential md-card .label, #currentCommission md-card .label, #paidCommissions md-card .label {
       position: absolute;
-      bottom: 12px;
-      left: 12px; }
+      bottom: 6px;
+      left: 8px;
+      color: #a1a1a1; }
 
-#paidCommissions md-card {
-  height: 120px; }
+#commissionPotential md-card {
+  height: 180px; }
 
 .border-bottom {
   border-bottom: 1px solid black; }
 
+#paymentDetailsModal .md-dialog-content {
+  padding: 8px; }
+
+.blur {
+  -webkit-filter: blur(6px) grayscale(0.75);
+  -moz-filter: blur(6px) grayscale(0.75);
+  -o-filter: blur(6px) grayscale(0.75);
+  -ms-filter: blur(6px) grayscale(0.75);
+  filter: blur(6px) grayscale(0.75); }
+
+[md-header-picture] {
+  position: relative;
+  width: 100%;
+  height: 0;
+  /* Simple trick to keep a 16:9 ratio on your background image (height=0;padding-bottom=56.25%) */
+  padding-bottom: 56.25%;
+  overflow: hidden;
+  background-size: 160%;
+  /* You can override this value if your picture has a weird ratio */
+  background-position: 50% 50%; }
+
+[md-header-title]:focus {
+  outline: none; }
+
+[scroll] {
+  position: fixed;
+  top: 0; }
+
+/* I made a simple scale animation on float action button during scroll */
+.main-fab {
+  position: absolute;
+  left: calc(100% - 90px);
+  z-index: 20;
+  transform: scale(1, 1);
+  transition: transform .1s ease-out; }
+
+.main-fab.hide {
+  transform: scale(0, 0);
+  transition: transform .1s ease-out; }
+
+/* Lines of code below are just here to get a better aspect but optionnal */
 .align-left {
   text-align: left; }
 
 .align-right {
   text-align: right; }
+
+.no-wrap {
+  white-space: nowrap; }
+
+td {
+  padding-right: 8px;
+  padding-left: 8px;
+  border: 1px solid #EEEEEE; }
 
 /*# sourceMappingURL=sales-panel-pay.css.map */

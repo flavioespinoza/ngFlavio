@@ -6,6 +6,7 @@ var controller = require('./currentCommissionDetails.controller.js');
 
 var router = express.Router();
 
+router.post('/', controller.newCommissionDetails);
 router.get('/:activeSalesRepId', controller.getCurrentCommissionDetails);
 
 module.exports = router;

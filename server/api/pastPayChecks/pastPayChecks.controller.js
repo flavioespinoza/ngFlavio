@@ -29,7 +29,8 @@ exports.newPayCheck = function (req, res) {
 };
 
 exports.getPayCheckById = function(req, res) {
-  pastPayCheck.find({'ActiveSalesRepId': req.params.activeSalesRepId}, function (err, payCheck) {
+  console.log('checkid: ', typeof req.params.payCheckId);
+  pastPayCheck.find({'PayCheckId': req.params.payCheckId}, function (err, payCheck) {
     if(err) { return handleError(res, err); }
     if(!payCheck) { return res.status(404).send('Not Found'); }
     return res.json(payCheck);

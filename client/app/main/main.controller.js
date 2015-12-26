@@ -2,135 +2,8 @@
  * Created by Flavor on 12/18/15.
  */
 var app = angular.module('ngFlavApp');
-app.controller('MainCtrl', function($scope, $http, pastPayChecks) {
 
-  //TODO: Make this a directive which can read the div width dynamically for responsiveness
-  /**
-   * Get active accounts sold but not installed for Commission Potential and render
-   * in D3 graph
-   */
-
-  //TODO: Set up separate API for Sold Not Installed data with potential commission calculated
-  var data = [
-    {
-      "GrandTotal": 200,
-      "Final": 200,
-      "Adj": null,
-      "Notes": "",
-      "Panels": 10,
-      "SystemSize": 2.6,
-      "ProductType": "PV System",
-      "MarketType": null,
-      "Referral": "",
-      "CustomerName": "Yang, Xiao Long",
-      "JobID": "JB-9405432-00",
-      "CreatedDate": "6/23/2015"
-    },
-    {
-      "GrandTotal": 765,
-      "Final": 765,
-      "Adj": null,
-      "Notes": "",
-      "Panels": 17,
-      "SystemSize": 4.42,
-      "ProductType": "PV System",
-      "MarketType": null,
-      "Referral": "Referral",
-      "CustomerName": "Galicia, Francisco",
-      "JobID": "JB-9412659-00",
-      "CreatedDate": "6/25/2015"
-    },
-    {
-      "GrandTotal": 1125,
-      "Final": 1125,
-      "Adj": null,
-      "Notes": "",
-      "Panels": 25,
-      "SystemSize": 6.5,
-      "ProductType": "PV System",
-      "MarketType": null,
-      "Referral": "Referral",
-      "CustomerName": "Medeiros, Dennis",
-      "JobID": "JB-94516446-00",
-      "CreatedDate": "6/26/2015"
-    },
-    {
-      "GrandTotal": 990,
-      "Final": 990,
-      "Adj": null,
-      "Notes": "",
-      "Panels": 22,
-      "SystemSize": 5.72,
-      "ProductType": "PV System",
-      "MarketType": null,
-      "Referral": "Referral",
-      "CustomerName": "Ponce, Felipe",
-      "JobID": "JB-9405533-00",
-      "CreatedDate": "7/13/2015"
-    },
-    {
-      "GrandTotal": 990,
-      "Final": 990,
-      "Adj": null,
-      "Notes": "",
-      "Panels": 22,
-      "SystemSize": 5.72,
-      "ProductType": "PV System",
-      "MarketType": null,
-      "Referral": "Referral",
-      "CustomerName": "Varghese, Santosh",
-      "JobID": "JB-9405555-00",
-      "CreatedDate": "7/16/2015"
-    }
-  ];
-
-  var percentage = function (width, percentage) {
-    return width / 100 * percentage;
-  };
-
-  var createGraph = function (data, width, duration) {
-    var bar, barHeight, chart, lineHeight, max, minus, number, numerMinus, row, scale;
-    lineHeight = 48;
-    barHeight = 20;
-    max = d3.max(data, function (d) {
-      return d.Final;
-    });
-    minus = percentage(width, 24);
-    scale = d3.scale.linear().domain([
-      0,
-      max
-    ]).range([
-      0,
-      width - minus
-    ]);
-    chart = d3.select('.graph').attr('width', width).attr('height', lineHeight * data.length);
-    row = chart.selectAll('g').data(data).enter().append('g').attr('transform', function (d, i) {
-      return 'translate(0,' + i * lineHeight + ')';
-    });
-    bar = row.append('g');
-    bar.attr('style', 'fill: #3F51B5; opacity: .75;');
-    bar.append('text').attr('x', 0).attr('y', 10).attr('width', 120).attr('height', 10).attr('style', 'fill: #3F51B5; font-size: 0.9rem').text(function (d) {
-      return d.CustomerName;
-    });
-    bar.append('rect').attr('x', 0).attr('y', 12).attr('width', 0).attr('height', barHeight).transition().duration(duration).attr('width', function (d) {
-      return scale(d.Final);
-    });
-    number = row.append('g');
-    numerMinus = percentage(width, 4);
-    number.append('text').data(data).attr('x', width - numerMinus).attr('y', barHeight).attr('dy', '.35em').text(0).attr('style', 'fill: #3F51B5').attr('text-anchor', 'end').transition().duration(duration).tween('text', function (d) {
-      var i, prec, round;
-
-      i = d3.interpolate(this.textContent, d.Final);
-      prec = d.CustomerName.toString().split('.');
-      round = prec.length > 1 ? Math.pow(10, prec[1].length) : 1;
-      return function (t) {
-        return this.textContent = Math.round(i(t) * round) / round;
-      };
-    });
-  };
-
-  createGraph(data, 320, 1000);
-
+app.controller('MainCtrl', function ($scope, $http, $mdDialog, pastPayChecks) {
 
   /**
    * Get past paychecks for current user
@@ -142,19 +15,13 @@ app.controller('MainCtrl', function($scope, $http, pastPayChecks) {
 
   $scope.pastPaymentsList = [];
 
-  pastPayChecks.getPayCheckById(333333).then(function(res){
-    console.log('getPayCheckById: ', res);
-
-  }).catch(function(err) {
-    console.log('getPayCheckById err:', err);
-  });
 
   pastPayChecks.getCurrentCommissionDetails(activeSalesRepId)
-    .then(function(res){
+    .then(function (res) {
       $scope.currentCommissionDetails = res.data;
       console.log('$scope.currentCommissionDetails: ', $scope.currentCommissionDetails);
 
-    }).catch(function(err) {
+    }).catch(function (err) {
       console.log('getCurrentCommissionDetails err:', err);
     });
 
@@ -162,15 +29,270 @@ app.controller('MainCtrl', function($scope, $http, pastPayChecks) {
   var startDate = new Date(2015, 1, 1).toJSON();
   var endDate = new Date().toJSON();
 
-  pastPayChecks.findPayCheckByPayPeriod(startDate, endDate, activeSalesRepId).then(function(res) {
+  pastPayChecks.findPayCheckByPayPeriod(startDate, endDate, activeSalesRepId).then(function (res) {
 
     $scope.pastPaymentsList = res.data;
 
     console.log('$scope.pastPaymentsList: ', $scope.pastPaymentsList);
 
-  }).catch(function(err) {
+  }).catch(function (err) {
     console.log('findPayCheckByPayPeriod err:', err);
   });
 
+  $scope.getPayCheckById = function (payCheckId) {
+    return pastPayChecks.getPayCheckById(payCheckId)
+      .then(function (res) {
+        console.log('getPayCheckById: ', res);
+
+      }).catch(function (err) {
+        console.log('getPayCheckById err:', err);
+
+      });
+  };
+
+  $scope.showCommissionDetail = function(ev, commissionDetail) {
+    $mdDialog.show({
+      controller: DialogController,
+      templateUrl: 'dialog1.tmpl.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose: true,
+      fullscreen: true,
+      locals: {
+        commissionDetail: commissionDetail
+      }
+    })
+      .then(function(answer) {
+
+
+      }, function() {
+
+      });
+
+
+
+  };
+
+  function DialogController($scope, $mdDialog, commissionDetail) {
+
+    $scope.commissionDetail = commissionDetail;
+
+    $scope.close = function() {
+      $mdDialog.hide();
+    };
+
+  }
+
+  $scope.pushData = function () {
+
+    var payCheckObj = {
+      "PayCheckId": 123451,
+      "ActiveSalesRepId": 105386,
+      "ActiveSalesRepName": "Remo Williams",
+      "PayPeriod": "1/1/2016",
+      "PaymentTotals": {
+        "First": null,
+        "Adj": -185.13,
+        "Final": 4370,
+        "GrandTotal": 4184.87
+      },
+      "PaymentDetails": [
+        {
+          "CreatedDate": "3/27/2014",
+          "JobId": "JB-9403552-00",
+          "CustomerName": "Wang, Yongqi",
+          "Referral": "",
+          "MarketType": null,
+          "ProductType": "",
+          "SystemSize": 4.08,
+          "Panels": null,
+          "Notes": "Cancelled",
+          "Adj": -185.13,
+          "Final": null,
+          "GrandTotal": -185.13
+        },
+        {
+          "CreatedDate": "5/11/2015",
+          "JobId": "JB-9373963-00",
+          "CustomerName": "Mixay, William",
+          "Referral": "",
+          "MarketType": null,
+          "ProductType": "PV System",
+          "SystemSize": 2.6,
+          "Panels": 10,
+          "Notes": "",
+          "Adj": null,
+          "Final": 200,
+          "GrandTotal": 200
+        },
+        {
+          "CreatedDate": "5/25/2015",
+          "JobId": "JB-9405277-00",
+          "CustomerName": "Ghazvini, Mariam",
+          "Referral": "",
+          "MarketType": null,
+          "ProductType": "PV System",
+          "SystemSize": 8.06,
+          "Panels": 31,
+          "Notes": "Transfer of Rep after 'Final contract and before installation",
+          "Adj": null,
+          "Final": 100,
+          "GrandTotal": 100
+        },
+        {
+          "CreatedDate": "6/23/2015",
+          "JobId": "JB-9405432-00",
+          "CustomerName": "Yang, Xiao Long",
+          "Referral": "",
+          "MarketType": null,
+          "ProductType": "PV System",
+          "SystemSize": 2.6,
+          "Panels": 10,
+          "Notes": "",
+          "Adj": null,
+          "Final": 200,
+          "GrandTotal": 200
+        },
+        {
+          "CreatedDate": "6/25/2015",
+          "JobId": "JB-9412659-00",
+          "CustomerName": "Galicia, Francisco",
+          "Referral": "Referral",
+          "MarketType": null,
+          "ProductType": "PV System",
+          "SystemSize": 4.42,
+          "Panels": 17,
+          "Notes": "",
+          "Adj": null,
+          "Final": 765,
+          "GrandTotal": 765
+        },
+        {
+          "CreatedDate": "6/26/2015",
+          "JobId": "JB-94516446-00",
+          "CustomerName": "Medeiros, Dennis",
+          "Referral": "Referral",
+          "MarketType": null,
+          "ProductType": "PV System",
+          "SystemSize": 6.5,
+          "Panels": 25,
+          "Notes": "",
+          "Adj": null,
+          "Final": 1125,
+          "GrandTotal": 1125
+        },
+        {
+          "CreatedDate": "7/13/2015",
+          "JobId": "JB-9405533-00",
+          "CustomerName": "Ponce, Felipe",
+          "Referral": "Referral",
+          "MarketType": null,
+          "ProductType": "PV System",
+          "SystemSize": 5.72,
+          "Panels": 22,
+          "Notes": "",
+          "Adj": null,
+          "Final": 990,
+          "GrandTotal": 990
+        }
+      ]
+    };
+
+    pastPayChecks.createNew(payCheckObj)
+      .then(function (response) {
+        console.log('response: ', response);
+      })
+
+  };
+
+});
+
+app.directive("scroll", function ($window) {
+
+  return function(scope, element, attrs) {
+
+    /* header DOM element with md-page-header attribute */
+    var header = document.querySelector('[md-page-header]');
+    /* Store header dimensions to initialize header styling */
+    var baseDimensions = header.getBoundingClientRect();
+    /* DOM element with md-header-title attribute (title in toolbar) */
+    var title = angular.element(document.querySelector('[md-header-title]'));
+    /* DOM element with md-header-picture attribute (picture in header) */
+    var picture = angular.element(document.querySelector('[md-header-picture]'));
+
+    var imgUrl = 'http://extras.mnginteractive.com/live/media/site568/2014/0312/20140312_050154_0313solarcity.jpg';
+
+
+    /* DOM element with main-fab class (a DOM element which contains the main float action button element) */
+    var fab = angular.element(document.querySelector('.main-fab'));
+    /* The height of a toolbar by default in Angular Material */
+    var legacyToolbarH = 64;
+    /* The mid-height of a float action button by default in Angular Material */
+    var legacyFabMid = 56/2;
+    /* The zoom scale of the toolbar title when it's placed at the bottom of the header picture */
+    var titleZoom = 1.5;
+    /* The primary color palette used by Angular Material */
+    var primaryColor = [63,81,181];
+
+    function styleInit () {
+      title.css('padding-left','14px');
+
+      title.css('font-size','14px');
+      title.css('position','relative');
+      title.css('transform-origin', '30px 150px 0px');
+    }
+
+    function handleStyle(dim) {
+      fab.css('top',(dim.height-legacyFabMid)+'px');
+      if ((dim.bottom-baseDimensions.top) > legacyToolbarH) {
+        title.css('top', ((dim.bottom-baseDimensions.top)-legacyToolbarH)+'px');
+        element.css('height', (dim.bottom-baseDimensions.top)+'px');
+        title.css('transform','scale('+((titleZoom-1)*ratio(dim)+1)+','+((titleZoom-1)*ratio(dim)+1)+')');
+
+      } else {
+        title.css('top', '0px');
+        element.css('height', legacyToolbarH+'px');
+        title.css('transform','scale(1,1)');
+      }
+      if ((dim.bottom-baseDimensions.top) < legacyToolbarH*2 && !fab.hasClass('hide')) {
+        fab.addClass('hide');
+      }
+      if((dim.bottom-baseDimensions.top)>legacyToolbarH*2 && fab.hasClass('hide')) {
+        fab.removeClass('hide');
+      }
+      element.css('background-color','rgba('+primaryColor[0]+','+primaryColor[1]+','+primaryColor[2]+','+(1-ratio(dim))+')');
+      picture.css('background-image','url(' + imgUrl + ')');
+      //picture.css('-webkit-filter','blur(5px)');
+      picture.css('background-position','50% '+(ratio(dim)*50)+'%');
+      /* Uncomment the line below if you want shadow inside picture (low performance) */
+      //element.css('box-shadow', '0 -'+(dim.height*3/4)+'px '+(dim.height/2)+'px -'+(dim.height/2)+'px rgba(0,0,0,'+ratio(dim)+') inset');
+    }
+
+    function ratio(dim) {
+      var r = (dim.bottom-baseDimensions.top)/dim.height;
+      if(r<0) return 0;
+      if(r>1) return 1;
+      return Number(r.toString().match(/^\d+(?:\.\d{0,2})?/));
+    }
+
+    styleInit();
+    handleStyle(baseDimensions);
+
+    /* Scroll event listener */
+    angular.element($window).bind("scroll", function() {
+      var dimensions = header.getBoundingClientRect();
+      handleStyle(dimensions);
+      scope.$apply();
+    });
+
+    /* Resize event listener */
+    angular.element($window).bind('resize',function () {
+      baseDimensions = header.getBoundingClientRect();
+      var dimensions = header.getBoundingClientRect();
+      handleStyle(dimensions);
+      scope.$apply();
+    });
+
+  };
 
 });

@@ -10,10 +10,14 @@
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css"/>
+
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(client) app/vendor.css -->
       <!-- bower:css -->
       <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
+      <link rel="stylesheet" href="bower_components/angular-responsive-tables/release/angular-responsive-tables.css" />
       <!-- endbower -->
     <!-- endbuild -->
 
@@ -56,6 +60,7 @@
       <script src="bower_components/angular-messages/angular-messages.js"></script>
       <script src="bower_components/angular-material/angular-material.js"></script>
       <script src="bower_components/d3/d3.js"></script>
+      <script src="bower_components/angular-responsive-tables/release/angular-responsive-tables.js"></script>
       <!-- endbower -->
     <!-- endbuild -->
 
@@ -64,6 +69,7 @@
 
         <script src="app/app.js"></script>
           <!-- injector:js -->
+          <script src="app/directives/d3-graph-directives.js"></script>
           <script src="app/main/main.controller.js"></script>
           <script src="app/main/main.js"></script>
           <script src="app/services/payCheckServices.js"></script>

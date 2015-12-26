@@ -8,17 +8,10 @@ app.factory('pastPayChecks', function ($http) {
   var currentCommissionUrl = 'http://localhost:9000/api/currentCommissionDetails';
   var pastCommissionUrl = 'http://localhost:9000/api/pastPayChecks';
 
-  var getCurrentCommissionDetails = function(startDate, endDate, activeSalesRepId) {
-    var data = {
-      startDate : startDate,
-      endDate : endDate,
-      activeSalesRepId : activeSalesRepId
-    };
-
+  var getCurrentCommissionDetails = function(activeSalesRepId) {
     return $http({
-      method: 'POST',
-      url: currentCommissionUrl + '/' + activeSalesRepId,
-      data: data
+      method: 'GET',
+      url: currentCommissionUrl + '/' + activeSalesRepId
     })
   };
 
@@ -39,7 +32,8 @@ app.factory('pastPayChecks', function ($http) {
 
     return $http({
       method: 'POST',
-      url: pastCommissionUrl + '/newPayCheck',
+      //url: pastCommissionUrl + '/newPayCheck',
+      url: currentCommissionUrl,
       data: data
     });
 
