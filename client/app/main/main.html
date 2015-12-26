@@ -1,136 +1,106 @@
-<header md-page-header>
+<div id="profilePage">
 
-  <div md-header-picture class="blur"></div>
+  <header md-page-header>
 
-  <md-toolbar scroll>
-    <div class="md-toolbar-tools">
-      <!--<md-button class="md-tools" aria-label="Go Back">-->
+    <div md-header-picture class="blur"></div>
 
-      <!--</md-button>-->
-      <div md-header-title flex ng-click="showCommissionDetail($event, currentCommissionDetails[0])">
-        Potential Commissions: $12,800
-        <br />
-        Quarterly Bonus: $1,800
+    <md-toolbar id="mainToolbar" scroll>
+      <div class="md-toolbar-tools">
+        <!--<md-button class="md-tools" aria-label="Go Back">-->
+          <!--<i class="fa fa-chevron-left"></i>-->
+        <!--</md-button>-->
+        <h2 id="headerTitle" md-header-title flex>
+          <div>Commission Potential: $12,960</div>
+          <div>Quarterly Bonus: $2,400</div>
+        </h2>
+        <md-button class="md-tools" aria-label="Edit Contact">
+          <i class="fa fa-envelope"></i>
+        </md-button>
+        <md-button class="md-tools" aria-label="More">
+          <i class="fa fa-bars"></i>
+        </md-button>
       </div>
-      <!--<md-button class="md-raised" ng-click="pushData()">pushData</md-button>-->
+    </md-toolbar>
 
-
+    <div class="main-fab">
+      <md-button aria-label="Float Action Button" class="md-fab md-accent" ng-click="pushData()">
+        <i class="fa fa-usd"></i>
+      </md-button>
     </div>
-  </md-toolbar>
+
+  </header>
+
+  <md-content>
+    <section>
+      <md-subheader class="md-primary" sticky-state="next">Payments</md-subheader>
+      <md-divider></md-divider>
+      <md-list layout-padding>
+        <md-list-item class="md-3-line" ng-repeat="p in pastPaymentsList | orderBy: 'PayPeriod': true">
+          <div class="w100" ng-click="showCommissionDetail($event, p)">
+            <img ng-src="http://fillmurray.com/200/300" class="md-avatar" alt="Avatar">
+            <div class="md-list-item-text">
+
+              <div layout="row">
+                <div flex class="align-left">First</div>
+                <div flex class="align-right">{{p.PaymentTotals.First | number:2}}</div>
+              </div>
+
+              <div layout="row">
+                <div flex class="align-left">Adj</div>
+                <div flex class="align-right">{{p.PaymentTotals.Adj | number:2}}</div>
+              </div>
+
+              <div layout="row">
+                <div flex class="align-left border-bottom">Final</div>
+                <div flex class="align-right border-bottom">{{p.PaymentTotals.Final | number:2}}</div>
+              </div>
+
+              <div layout="row">
+                <div flex class="align-left">Paid: {{p.PayPeriod | date:'MMM d, yyyy'}}</div>
+                <h2 flex class="align-right">{{p.PaymentTotals.GrandTotal | number:2}}</h2>
+              </div>
+
+            </div>
+          </div>
+
+          <md-divider></md-divider>
+        </md-list-item>
+      </md-list>
+    </section>
+  </md-content>
+</div>
 
 
 
-</header>
-
-<!--<md-toolbar class="md-accent" md-scroll-shrink="" ng-if="true">-->
-  <!--<div class="md-toolbar-tools">-->
-    <!--<h2>-->
-      <!--<span>Sales Panel Pay</span>-->
-    <!--</h2>-->
-  <!--</div>-->
-<!--</md-toolbar>-->
-
-<md-content>
-
-  <!--<section id="commissionPotential">-->
-    <!--<div layout="row" layout-xs="column">-->
-      <!--<md-card flex class="md-padding">-->
-        <!--<svg class="graph"></svg>-->
-        <!--<div class="label">Commission Potential</div>-->
-      <!--</md-card>-->
-      <!--<md-card flex class="md-padding">-->
-        <!--<div class="label">Quarterly Bonus So Far</div>-->
-      <!--</md-card>-->
-    <!--</div>-->
-  <!--</section>-->
-
-  <section id="currentCommission" layout="row" ng-repeat="c in currentCommissionDetails">
-
-    <md-card flex="100" class="md-padding" ng-click="showCommissionDetail($event, c)">
-
-      <div layout="row">
-        <div flex class="align-left"></div>
-        <div flex class="align-left">Adj</div>
-        <div flex class="align-right">{{c.PaymentTotals.Adj | number:2}}</div>
-      </div>
-
-      <div layout="row">
-        <div flex></div>
-        <div flex class="align-left">First</div>
-        <div flex class="align-right">{{c.PaymentTotals.First | number:2}}</div>
-      </div>
-
-      <div layout="row">
-        <div flex></div>
-        <div flex class="align-left border-bottom">Final</div>
-        <div flex class="align-right border-bottom">{{c.PaymentTotals.Final | number:2}}</div>
-      </div>
-
-      <div layout="row">
-        <div flex></div>
-        <div flex class="align-left">Grand Total</div>
-        <div flex class="align-right">{{c.PaymentTotals.GrandTotal | number:2}}</div>
-      </div>
-
-      <div class="label">Current Commission</div>
-
-    </md-card>
-
-  </section>
-
-  <br/>
-  <md-divider></md-divider>
-  <br/>
-
-  <section id="paidCommissions" layout="row" ng-repeat="c in pastPaymentsList | orderBy: 'PayPeriod': true">
-
-    <md-card flex="100" class="md-padding" ng-click="showCommissionDetail($event, c)">
-      <div layout="row">
-        <div flex></div>
-        <div flex class="align-left">Adj</div>
-        <div flex class="align-right">{{c.PaymentTotals.Adj | number:2}}</div>
-      </div>
-
-      <div layout="row">
-        <div flex></div>
-        <div flex class="align-left">First</div>
-        <div flex class="align-right">{{c.PaymentTotals.First | number:2}}</div>
-      </div>
-
-      <div layout="row">
-        <div flex></div>
-        <div flex class="align-left border-bottom">Final</div>
-        <div flex class="align-right border-bottom">{{c.PaymentTotals.Final | number:2}}</div>
-      </div>
-
-      <div layout="row">
-        <div flex></div>
-        <div flex class="align-left">Grand Total</div>
-        <div flex class="align-right">{{c.PaymentTotals.GrandTotal | number:2}}</div>
-      </div>
-
-      <div class="label">{{c.PayPeriod | date:'MMM d, yyyy'}}</div>
-    </md-card>
-
-  </section>
-
-</md-content>
-
-
+<!-- Modal -->
 <script type="text/ng-template" id="dialog1.tmpl.html">
 
   <md-dialog id="paymentDetailsModal" aria-label="Modal Dialog" ng-cloak>
 
     <form>
 
-      <md-toolbar>
-        <div class="md-toolbar-tools">
-          <h2>Commission Details</h2>
-          <span flex></span>
-          <md-button aria-label="Cancel" class="md-icon-button" ng-click="close()">
-            <i class="fa fa-close"></i>
-          </md-button>
-        </div>
+      <md-toolbar class="md-tall md-3-line">
+
+          <div layout="row">
+            <div flex class="align-left">First</div>
+            <div flex class="align-right">{{commissionDetail.PaymentTotals.First | number:2}}</div>
+          </div>
+
+          <div layout="row">
+            <div flex class="align-left">Adj</div>
+            <div flex class="align-right">{{commissionDetail.PaymentTotals.Adj | number:2}}</div>
+          </div>
+
+          <div layout="row">
+            <div flex class="align-left border-bottom-white">Final</div>
+            <div flex class="align-right border-bottom-white">{{commissionDetail.PaymentTotals.Final | number:2}}</div>
+          </div>
+
+          <div layout="row">
+            <div flex class="align-left">Paid: {{commissionDetail.PayPeriod | date:'MMM d, yyyy'}}</div>
+            <h2 flex class="align-right">{{commissionDetail.PaymentTotals.GrandTotal | number:2}}</h2>
+          </div>
+
       </md-toolbar>
 
       <md-dialog-content>
@@ -140,7 +110,7 @@
             <tr>
               <th>Job ID</th>
               <th>Customer Name</th>
-              <th>System Size</th>
+              <th>kW</th>
               <th>Panels</th>
               <th>Notes</th>
               <th>Adj</th>
@@ -151,7 +121,7 @@
             <tbody>
             <tr ng-repeat="p in commissionDetail.PaymentDetails">
               <td class="no-wrap">{{p.JobId}}</td>
-              <td class="no-wrap">{{p.CustomerName}}</td>
+              <td>{{p.CustomerName}}</td>
               <td>{{p.SystemSize}}</td>
               <td>{{p.Panels}}</td>
               <td>{{p.Notes}}</td>
@@ -164,9 +134,9 @@
         </div>
       </md-dialog-content>
 
-      <md-dialog-actions layout="row">
-        <md-button class="md-raised" ng-click="close()" style="margin-right:20px;">
-          Got it!
+      <md-dialog-actions class="dialog-footer" layout="row">
+        <md-button class="md-fab md-mini md-accent" ng-click="close()" style="margin-right:20px;">
+          <i class="fa fa-close"></i>
         </md-button>
       </md-dialog-actions>
 
@@ -175,5 +145,3 @@
   </md-dialog>
 
 </script>
-
-

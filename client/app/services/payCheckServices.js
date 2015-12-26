@@ -32,8 +32,8 @@ app.factory('pastPayChecks', function ($http) {
 
     return $http({
       method: 'POST',
-      //url: pastCommissionUrl + '/newPayCheck',
-      url: currentCommissionUrl,
+      url: pastCommissionUrl + '/newPayCheck',
+      //url: currentCommissionUrl,
       data: data
     });
 
