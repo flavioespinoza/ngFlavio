@@ -43,8 +43,14 @@ md-dialog .md-dialog-content {
 .w100 {
   width: 100%;
 }
-.w-100:focus {
-  outline: none;
+.w100:focus {
+  outline: none !important;
+}
+
+i.fa.fa-check-circle {
+  font-size: 36px;
+  margin-bottom: 4px;
+  color: rgba(76, 162, 76, 0.46);
 }
 
 .align-left {

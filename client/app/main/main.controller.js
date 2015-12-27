@@ -11,19 +11,13 @@ app.controller('MainCtrl', function ($scope, $http, $mdDialog, pastPayChecks) {
   var activeSalesRepId = 105386;
   //var activeSalesRepId = 111111;
 
-  $scope.currentCommisionDetails = [];
+  $scope.currentCommissionDetails = [];
 
   $scope.pastPaymentsList = [];
 
-  pastPayChecks.getCurrentCommissionDetails(activeSalesRepId)
-    .then(function (res) {
-      $scope.currentCommissionDetails = res.data;
-      console.log('$scope.currentCommissionDetails: ', $scope.currentCommissionDetails);
 
-    }).catch(function (err) {
-      console.log('getCurrentCommissionDetails err:', err);
-    });
 
+  var foo = 'lll';
 
   var startDate = new Date(2011, 1, 1).toJSON();
   var endDate = new Date().toJSON();
@@ -38,16 +32,14 @@ app.controller('MainCtrl', function ($scope, $http, $mdDialog, pastPayChecks) {
     console.log('findPayCheckByPayPeriod err:', err);
   });
 
-  $scope.getPayCheckById = function (payCheckId) {
-    return pastPayChecks.getPayCheckById(payCheckId)
-      .then(function (res) {
-        console.log('getPayCheckById: ', res);
+  pastPayChecks.getCurrentCommissionDetails(activeSalesRepId)
+    .then(function (res) {
+      $scope.currentCommissionDetails = res.data[0];
+      console.log('$scope.currentCommissionDetails: ', $scope.currentCommissionDetails);
 
-      }).catch(function (err) {
-        console.log('getPayCheckById err:', err);
-
-      });
-  };
+    }).catch(function (err) {
+      console.log('getCurrentCommissionDetails err:', err);
+    });
 
   $scope.showCommissionDetail = function(ev, commissionDetail) {
     $mdDialog.show({
@@ -61,7 +53,7 @@ app.controller('MainCtrl', function ($scope, $http, $mdDialog, pastPayChecks) {
         commissionDetail: commissionDetail
       }
     })
-      .then(function(answer) {
+      .then(function() {
 
 
       }, function() {
