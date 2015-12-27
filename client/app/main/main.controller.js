@@ -11,6 +11,7 @@ app.controller('MainCtrl', function ($scope, $http, $mdDialog, pastPayChecks) {
   var activeSalesRepId = 105386;
   //var activeSalesRepId = 111111;
 
+  $scope.commissionPotentialDetails = [];
   $scope.currentCommissionDetails = [];
 
   $scope.pastPaymentsList = [];
@@ -32,6 +33,15 @@ app.controller('MainCtrl', function ($scope, $http, $mdDialog, pastPayChecks) {
     console.log('findPayCheckByPayPeriod err:', err);
   });
 
+  pastPayChecks.getCommissionPotential(activeSalesRepId)
+    .then(function (res) {
+      $scope.commissionPotentialDetails = res.data[0];
+      console.log('$scope.commissionPotentialDetails: ', $scope.commissionPotentialDetails);
+
+    }).catch(function (err) {
+      console.log('getCurrentCommissionDetails err:', err);
+    });
+
   pastPayChecks.getCurrentCommissionDetails(activeSalesRepId)
     .then(function (res) {
       $scope.currentCommissionDetails = res.data[0];
@@ -41,9 +51,47 @@ app.controller('MainCtrl', function ($scope, $http, $mdDialog, pastPayChecks) {
       console.log('getCurrentCommissionDetails err:', err);
     });
 
+
+  /**
+   * Show potential commission details & quarterly bonus details
+   */
+  $scope.showPotentialCommissionDetail = function(ev, potentialCommissionDetail) {
+    $mdDialog.show({
+      controller: potentialCommissionDialogController,
+      templateUrl: 'dialog2.tmpl.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose: true,
+      fullscreen: true,
+      locals: {
+        potentialCommissionDetail: potentialCommissionDetail
+      }
+    })
+      .then(function() {
+
+
+      }, function() {
+
+      });
+  };
+
+  function potentialCommissionDialogController($scope, $mdDialog, potentialCommissionDetail) {
+
+    $scope.potentialCommissionDetail = potentialCommissionDetail;
+
+    $scope.close = function() {
+      $mdDialog.hide();
+    };
+
+  }
+
+
+  /**
+   * Show past and current commission details
+   */
   $scope.showCommissionDetail = function(ev, commissionDetail) {
     $mdDialog.show({
-      controller: DialogController,
+      controller: dialogController,
       templateUrl: 'dialog1.tmpl.html',
       parent: angular.element(document.body),
       targetEvent: ev,
@@ -59,12 +107,9 @@ app.controller('MainCtrl', function ($scope, $http, $mdDialog, pastPayChecks) {
       }, function() {
 
       });
-
-
-
   };
 
-  function DialogController($scope, $mdDialog, commissionDetail) {
+  function dialogController($scope, $mdDialog, commissionDetail) {
 
     $scope.commissionDetail = commissionDetail;
 
@@ -77,31 +122,26 @@ app.controller('MainCtrl', function ($scope, $http, $mdDialog, pastPayChecks) {
   $scope.pushData = function () {
 
     var payCheckObj = {
-      "PayCheckId": 113452,
+      "CommissionPotentialId": 555555,
       "ActiveSalesRepId": 105386,
       "ActiveSalesRepName": "Remo Williams",
-      "PayPeriod": "3/1/2015",
-      "PaymentTotals": {
-        "First": null,
-        "Adj": -185.13,
-        "Final": 4370,
-        "GrandTotal": 4184.87
+      "CommissionPotentialTotals": {
+        "GrandTotal": 4370
       },
-      "PaymentDetails": [
-        {
-          "CreatedDate": "3/27/2014",
-          "JobId": "JB-9403552-00",
-          "CustomerName": "Wang, Yongqi",
-          "Referral": "",
-          "MarketType": null,
-          "ProductType": "",
-          "SystemSize": 4.08,
-          "Panels": null,
-          "Notes": "Cancelled",
-          "Adj": -185.13,
-          "Final": null,
-          "GrandTotal": -185.13
-        },
+      "CurrentQuarterlyBonus": {
+        "GrandTotal": 1850,
+        "QuarterlyBonusDetails": [
+          {
+            "Reason": "Reason A",
+            "Value": 1000
+          },
+          {
+            "Reason": "Reason B",
+            "Value": 850
+          }
+        ]
+      },
+      "SoldButNotInstalledDetails": [
         {
           "CreatedDate": "5/11/2015",
           "JobId": "JB-9373963-00",
@@ -112,8 +152,6 @@ app.controller('MainCtrl', function ($scope, $http, $mdDialog, pastPayChecks) {
           "SystemSize": 2.6,
           "Panels": 10,
           "Notes": "",
-          "Adj": null,
-          "Final": 200,
           "GrandTotal": 200
         },
         {
@@ -126,8 +164,6 @@ app.controller('MainCtrl', function ($scope, $http, $mdDialog, pastPayChecks) {
           "SystemSize": 8.06,
           "Panels": 31,
           "Notes": "Transfer of Rep after 'Final contract and before installation",
-          "Adj": null,
-          "Final": 100,
           "GrandTotal": 100
         },
         {
@@ -140,8 +176,6 @@ app.controller('MainCtrl', function ($scope, $http, $mdDialog, pastPayChecks) {
           "SystemSize": 2.6,
           "Panels": 10,
           "Notes": "",
-          "Adj": null,
-          "Final": 200,
           "GrandTotal": 200
         },
         {
@@ -154,8 +188,6 @@ app.controller('MainCtrl', function ($scope, $http, $mdDialog, pastPayChecks) {
           "SystemSize": 4.42,
           "Panels": 17,
           "Notes": "",
-          "Adj": null,
-          "Final": 765,
           "GrandTotal": 765
         },
         {
@@ -168,8 +200,6 @@ app.controller('MainCtrl', function ($scope, $http, $mdDialog, pastPayChecks) {
           "SystemSize": 6.5,
           "Panels": 25,
           "Notes": "",
-          "Adj": null,
-          "Final": 1125,
           "GrandTotal": 1125
         },
         {
@@ -182,14 +212,12 @@ app.controller('MainCtrl', function ($scope, $http, $mdDialog, pastPayChecks) {
           "SystemSize": 5.72,
           "Panels": 22,
           "Notes": "",
-          "Adj": null,
-          "Final": 990,
           "GrandTotal": 990
         }
       ]
     };
 
-    pastPayChecks.createNew(payCheckObj)
+    pastPayChecks.createNewCommissionPotential(payCheckObj)
       .then(function (response) {
         console.log('response: ', response);
       })

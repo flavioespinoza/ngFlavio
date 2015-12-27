@@ -6,13 +6,10 @@
 
     <md-toolbar id="mainToolbar" scroll>
       <div class="md-toolbar-tools">
-        <h2 id="headerTitle" md-header-title flex>
-          <div>Commission Potential: $12,960</div>
-          <div>Quarterly Bonus: $2,400</div>
+        <h2 id="headerTitle" md-header-title flex ng-click="showPotentialCommissionDetail($event, commissionPotentialDetails)">
+          <div>Commission Potential: {{commissionPotentialDetails.CommissionPotentialTotals.GrandTotal | number:2}}</div>
+          <div>Quarterly Bonus: {{commissionPotentialDetails.CurrentQuarterlyBonus.GrandTotal | number:2}}</div>
         </h2>
-        <md-button class="md-tools" aria-label="Edit Contact">
-          <i class="fa fa-envelope"></i>
-        </md-button>
         <md-button class="md-tools" aria-label="More">
           <i class="fa fa-bars"></i>
         </md-button>
@@ -20,7 +17,7 @@
     </md-toolbar>
 
     <div class="main-fab">
-      <md-button aria-label="Float Action Button" class="md-fab md-accent" ng-click="pushData()">
+      <md-button aria-label="Float Action Button" class="md-fab md-accent" ng-click="showPotentialCommissionDetail($event, commissionPotentialDetails)">
         <i class="fa fa-usd"></i>
       </md-button>
     </div>
@@ -106,9 +103,67 @@
   </md-content>
 </div>
 
+<!-- Potential Commission & Bonus Details Modal -->
+<script type="text/ng-template" id="dialog2.tmpl.html">
 
+  <md-dialog id="potentialCommissionDetailsModal" aria-label="Modal Dialog" ng-cloak>
 
-<!-- Modal -->
+    <form>
+
+      <md-toolbar class="md-tall md-3-line">
+
+        <div layout="row">
+          <div flex class="align-left">Potential Commission</div>
+          <div flex class="align-right">{{potentialCommissionDetail.CommissionPotentialTotals.GrandTotal | number:2}}</div>
+        </div>
+
+        <div layout="row">
+          <div flex class="align-left">Current Quarterly Bonus</div>
+          <div flex class="align-right">{{potentialCommissionDetail.CurrentQuarterlyBonus.GrandTotal | number:2}}</div>
+        </div>
+
+      </md-toolbar>
+
+      <md-dialog-content>
+        <div class="md-dialog-content">
+          <table wt-responsive-table>
+            <thead>
+            <tr>
+              <th>Job ID</th>
+              <th>Customer Name</th>
+              <th>kW</th>
+              <th>Panels</th>
+              <th>Notes</th>
+              <th>Upon Install</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="p in potentialCommissionDetail.SoldButNotInstalledDetails">
+              <td class="no-wrap">{{p.JobId}}</td>
+              <td>{{p.CustomerName}}</td>
+              <td>{{p.SystemSize}}</td>
+              <td>{{p.Panels}}</td>
+              <td>{{p.Notes}}</td>
+              <td class="align-right">{{p.GrandTotal | currency:"$":2}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </md-dialog-content>
+
+      <md-dialog-actions class="dialog-footer" layout="row">
+        <md-button class="md-fab md-mini md-accent" ng-click="close()" aria-label="Close">
+          <i class="fa fa-close"></i>
+        </md-button>
+      </md-dialog-actions>
+
+    </form>
+
+  </md-dialog>
+
+</script>
+
+<!-- Past & Current Commission Details Modal -->
 <script type="text/ng-template" id="dialog1.tmpl.html">
 
   <md-dialog id="paymentDetailsModal" aria-label="Modal Dialog" ng-cloak>
@@ -133,7 +188,7 @@
           </div>
 
           <div layout="row">
-            <div flex class="align-left">Paid: {{commissionDetail.PayPeriod | date:'MMM d, yyyy'}}</div>
+            <div flex class="align-left">{{commissionDetail.PayPeriod | date:'MMM d, yyyy'}}</div>
             <h2 flex class="align-right">{{commissionDetail.PaymentTotals.GrandTotal | number:2}}</h2>
           </div>
 
@@ -171,7 +226,7 @@
       </md-dialog-content>
 
       <md-dialog-actions class="dialog-footer" layout="row">
-        <md-button class="md-fab md-mini md-accent" ng-click="close()" style="margin-right:20px;" aria-label="Close">
+        <md-button class="md-fab md-mini md-accent" ng-click="close()" aria-label="Close">
           <i class="fa fa-close"></i>
         </md-button>
       </md-dialog-actions>

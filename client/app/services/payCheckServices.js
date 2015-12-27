@@ -7,11 +7,19 @@ app.factory('pastPayChecks', function ($http) {
 
   var currentCommissionUrl = 'http://localhost:9000/api/currentCommissionDetails';
   var pastCommissionUrl = 'http://localhost:9000/api/pastPayChecks';
+  var commissionPotentialUrl = 'http://localhost:9000/api/commissionPotential';
 
   var getCurrentCommissionDetails = function(activeSalesRepId) {
     return $http({
       method: 'GET',
       url: currentCommissionUrl + '/' + activeSalesRepId
+    })
+  };
+
+  var getCommissionPotential = function(activeSalesRepId) {
+    return $http({
+      method: 'GET',
+      url: commissionPotentialUrl + '/' + activeSalesRepId
     })
   };
 
@@ -32,8 +40,33 @@ app.factory('pastPayChecks', function ($http) {
 
     return $http({
       method: 'POST',
-      url: pastCommissionUrl + '/newPayCheck',
+      url: commissionPotentialUrl,
+      //url: pastCommissionUrl + '/newPayCheck',
       //url: currentCommissionUrl,
+      data: data
+    });
+
+  };
+
+
+  var createNewCommissionPotential = function (commissionPotential) {
+    var data = {
+      CommissionPotentialId: commissionPotential.PayCheckId,
+      ActiveSalesRepId: commissionPotential.ActiveSalesRepId,
+      ActiveSalesRepName: commissionPotential.ActiveSalesRepName,
+      CommissionPotentialTotals: {
+        GrandTotal: commissionPotential.CommissionPotentialTotals.GrandTotal
+      },
+      CurrentQuarterlyBonus: {
+        GrandTotal: commissionPotential.CurrentQuarterlyBonus.GrandTotal,
+        QuarterlyBonusDetails: commissionPotential.CurrentQuarterlyBonus.QuarterlyBonusDetails
+      },
+      SoldButNotInstalledDetails: commissionPotential.SoldButNotInstalledDetails
+    };
+
+    return $http({
+      method: 'POST',
+      url: commissionPotentialUrl,
       data: data
     });
 
@@ -66,7 +99,9 @@ app.factory('pastPayChecks', function ($http) {
     getCurrentCommissionDetails: getCurrentCommissionDetails,
     createNew: createNew,
     findPayCheckByPayPeriod : findPayCheckByPayPeriod,
-    getPayCheckById: getPayCheckById
+    getPayCheckById: getPayCheckById,
+    getCommissionPotential: getCommissionPotential,
+    createNewCommissionPotential: createNewCommissionPotential
   }
 
 });
