@@ -18,19 +18,15 @@
       <!-- bower:css -->
       <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
       <link rel="stylesheet" href="bower_components/angular-responsive-tables/release/angular-responsive-tables.css" />
+      <link rel="stylesheet" href="bower_components/ng-material-floating-button/mfb/dist/mfb.css" />
       <!-- endbower -->
     <!-- endbuild -->
 
+    <link rel="stylesheet" href="styles/launchpad.css"/>
     <link rel="stylesheet" href="styles/sales-panel-pay.css"/>
 
   </head>
-  <body ng-app="ngFlavApp">
-    <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
-
-    <!-- Add your site or application content here -->
-    <div ui-view=""></div>
+  <body ng-app="ngFlavApp" ng-controller="MainCtrl">
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
     <script>
@@ -61,6 +57,7 @@
       <script src="bower_components/angular-material/angular-material.js"></script>
       <script src="bower_components/d3/d3.js"></script>
       <script src="bower_components/angular-responsive-tables/release/angular-responsive-tables.js"></script>
+      <script src="bower_components/ng-material-floating-button/src/mfb-directive.js"></script>
       <!-- endbower -->
     <!-- endbuild -->
 
@@ -70,12 +67,31 @@
         <script src="app/app.js"></script>
           <!-- injector:js -->
           <script src="app/directives/d3-graph-directives.js"></script>
+          <script src="app/directives/get-height-directive.js"></script>
+          <script src="app/directives/resize-directive.js"></script>
           <script src="app/directives/scroll-header-directive.js"></script>
           <script src="app/main/main.controller.js"></script>
           <script src="app/main/main.js"></script>
+          <script src="app/routes/customers/customers.controller.js"></script>
+          <script src="app/routes/launchpad/launchpad.controller.js"></script>
+          <script src="app/routes/more/more.controller.js"></script>
+          <script src="app/routes/notifications/notifications.controller.js"></script>
+          <script src="app/routes/pay/pay.controller.js"></script>
+          <script src="app/routes/teammates/teammates.controller.js"></script>
+          <script src="app/routes/time-sheet/time-sheet.controller.js"></script>
+          <script src="app/routes/university/university.controller.js"></script>
           <script src="app/services/payCheckServices.js"></script>
+          <script src="app/services/user.service.js"></script>
+          <script src="app/tabs/tabs.controller.js"></script>
           <script src="components/navbar/navbar.controller.js"></script>
           <!-- endinjector -->
         <!-- endbuild -->
+
+    <!-- Add your site or application content here -->
+    <div id="uiViewContainer" ui-view></div>
+
+
+
+
 </body>
 </html>

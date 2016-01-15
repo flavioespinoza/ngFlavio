@@ -1,9 +1,12 @@
 /**
+ * Created by Flavor on 1/12/16.
+ */
+/**
  * Created by Flavor on 12/18/15.
  */
 var app = angular.module('ngFlavApp');
 
-app.controller('MainCtrl', function ($scope, $state, $mdSidenav, $http, $mdDialog, user, pastPayChecks) {
+app.controller('PayCtrl', function ($scope, $state, $mdSidenav, $http, $mdDialog, user, pastPayChecks) {
 
   $scope.user = user.user;
 
@@ -17,7 +20,6 @@ app.controller('MainCtrl', function ($scope, $state, $mdSidenav, $http, $mdDialo
   $scope.goToState = function(state){
     $state.go(state);
   };
-
 
   /**
    * Get past paychecks for current user
@@ -41,7 +43,7 @@ app.controller('MainCtrl', function ($scope, $state, $mdSidenav, $http, $mdDialo
 
     $scope.pastPaymentsList = res.data;
 
-    //console.log('$scope.pastPaymentsList: ', $scope.pastPaymentsList);
+    console.log('$scope.pastPaymentsList: ', $scope.pastPaymentsList);
 
   }).catch(function (err) {
     console.log('findPayCheckByPayPeriod err:', err);
@@ -50,7 +52,7 @@ app.controller('MainCtrl', function ($scope, $state, $mdSidenav, $http, $mdDialo
   pastPayChecks.getCommissionPotential(activeSalesRepId)
     .then(function (res) {
       $scope.commissionPotentialDetails = res.data[0];
-      //console.log('$scope.commissionPotentialDetails: ', $scope.commissionPotentialDetails);
+      console.log('$scope.commissionPotentialDetails: ', $scope.commissionPotentialDetails);
 
     }).catch(function (err) {
       console.log('getCurrentCommissionDetails err:', err);
@@ -59,7 +61,7 @@ app.controller('MainCtrl', function ($scope, $state, $mdSidenav, $http, $mdDialo
   pastPayChecks.getCurrentCommissionDetails(activeSalesRepId)
     .then(function (res) {
       $scope.currentCommissionDetails = res.data[0];
-      //console.log('$scope.currentCommissionDetails: ', $scope.currentCommissionDetails);
+      console.log('$scope.currentCommissionDetails: ', $scope.currentCommissionDetails);
 
     }).catch(function (err) {
       console.log('getCurrentCommissionDetails err:', err);

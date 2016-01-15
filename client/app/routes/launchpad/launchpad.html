@@ -1,0 +1,54 @@
+
+<md-toolbar style="background-color: #4A4C55;">
+  <div class="md-toolbar-tools" style="background-color: #4A4C55;">
+    <md-button class="md-icon-button" aria-label="Settings">
+      <i class="fa fa-bars"></i>
+    </md-button>
+    <h2>
+      <span>The Grid</span>
+    </h2>
+    <span flex></span>
+    <md-button class="md-icon-button" aria-label="Favorite">
+      <md-icon md-svg-icon="img/icons/favorite.svg" style="color: greenyellow;"></md-icon>
+    </md-button>
+    <md-button class="md-icon-button" aria-label="More">
+      <md-icon md-svg-icon="img/icons/more_vert.svg"></md-icon>
+    </md-button>
+  </div>
+</md-toolbar>
+
+<div flex="" ng-cloak="" class="grid-list-dynamic-tiles">
+  <md-grid-list
+    md-cols-xs="2" md-cols-sm="3" md-cols-md="5" md-cols-gt-md="5"
+    md-row-height-xs="1:1"
+    md-row-height-sm="1:1"
+    md-row-height-gt-md="1:1"
+    md-row-height="1:1"
+    md-gutter-sm="4px" md-gutter-gt-xs="8px">
+
+    <md-grid-tile ng-repeat="t in tiles" md-rowspan="{{t.span.row}}" md-colspan="{{t.span.col}}" md-colspan-sm="1" ng-class="t.background" ng-click="goToState(t.state)">
+      <div class="lp-icons" ng-hide="t.img">
+        <i class="{{t.icon}}"></i>
+        <h3>{{t.title}}</h3>
+      </div>
+
+
+
+
+
+
+
+
+      <div class="img-wrapper" ng-show="t.img">
+        <img class="img-tile object-fit_cover" ng-src="{{t.img}}" alt="{{t.title}}"/>
+      </div>
+
+      <md-grid-tile-footer ng-show="t.img">
+        <h3>{{t.title}}</h3>
+      </md-grid-tile-footer>
+
+    </md-grid-tile>
+
+
+  </md-grid-list>
+</div>

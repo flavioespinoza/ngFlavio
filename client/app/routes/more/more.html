@@ -1,0 +1,8 @@
+<md-list id="moreList">
+  <md-list-item class="md-3-line" ng-repeat="m in menu" ng-click="alert(m.route)">
+    <i class="{{m.labelIcon}}"></i>
+    <div class="md-list-item-text" layout="column">
+      <h3>{{ m.bodyTitle }}</h3>
+    </div>
+  </md-list-item>
+</md-list>

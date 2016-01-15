@@ -1,11 +1,11 @@
-'use strict';
-
-angular.module('ngFlavApp')
-  .config(function ($stateProvider) {
-    $stateProvider
-      .state('main', {
-        url: '/',
-        templateUrl: 'app/main/main.html',
-        controller: 'MainCtrl'
-      });
-  });
+//'use strict';
+//
+//angular.module('ngFlavApp')
+//  .config(function ($stateProvider) {
+//    $stateProvider
+//      .state('main', {
+//        url: '/',
+//        templateUrl: 'app/main/main.html',
+//        controller: 'MainCtrl'
+//      });
+//  });

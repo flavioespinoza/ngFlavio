@@ -1,0 +1,48 @@
+<div layout="column" layout-fill>
+
+  <md-content class="h100">
+    <!-- Launch Pad Landing Page -->
+    <section id="tabSection">
+      <md-tabs md-selected="selectedIndex" md-dynamic-height="false" md-stretch-tabs="auto" md-align-tabs="{{align.bottom ? 'bottom' : 'top'}}" class="h100">
+        <!-- TODO: Change ng-repeat to new ionic version -->
+        <!-- tab -->
+        <md-tab label
+                md-active="tab.active"
+                md-on-select="onTabSelected(tab)"
+                md-on-deselect
+                data-ng-disabled="false"
+                ng-repeat="tab in tabs">
+          <!-- icon label -->
+          <md-tab-label>
+            <i class="{{tab.labelIcon}}"></i>
+            <div class="tab-title">{{tab.bodyTitle}}</div>
+          </md-tab-label>
+
+
+          <!-- tab content -->
+          <md-tab-body id="tabBodyContent" class="h100">
+
+            <md-toolbar class="md-search-toolbar" style="background-color: {{tabs[selectedIndex].color}}">
+              <!--<form method="get">-->
+                <!--<input type="search" name="q" class="search" placeholder="search" />-->
+              <!--</form>-->
+            </md-toolbar>
+
+            <!--html dom elements are rendered here -->
+            <div id="uiViewTabs" class="h100" ui-view flex ng-cloak></div>
+          </md-tab-body>
+
+        </md-tab>
+      </md-tabs>
+    </section>
+
+
+
+    <!--&lt;!&ndash; tab content &ndash;&gt;-->
+    <!--<md-tab-body id="tabBodyContent">-->
+      <!--&lt;!&ndash;html dom elements are rendered here &ndash;&gt;-->
+      <!--<div id="uiViewTabs" ui-view flex></div>-->
+    <!--</md-tab-body>-->
+
+  </md-content>
+</div>
