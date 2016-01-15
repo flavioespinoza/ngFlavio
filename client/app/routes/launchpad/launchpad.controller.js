@@ -91,6 +91,7 @@ app.controller('LaunchpadCtrl', function ($scope, $state, $timeout) {
         "row": 1,
         "col": 1
       }
+
     },
     {
       "icon": "fa fa-bar-chart",
