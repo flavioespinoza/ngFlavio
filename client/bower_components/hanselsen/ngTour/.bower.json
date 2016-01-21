@@ -1,0 +1,31 @@
+{
+  "name": "hanselsen/ngTour",
+  "license": "MIT",
+  "main": "ngTour.js",
+  "dependencies": {
+    "angular": "~1.4.8",
+    "bootstrap": "~3.3.5",
+    "angular-bootstrap": "~0.14.3",
+    "angular-scroll": "~1.0.0"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "package.json",
+    "Gruntfile.js"
+  ],
+  "homepage": "https://github.com/hanselsen/ngTour",
+  "_release": "1646c6ba7a",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "1646c6ba7a62beb037976e25dd26c788cdaf65c2"
+  },
+  "_source": "git://github.com/hanselsen/ngTour.git",
+  "_target": "*",
+  "_originalSource": "ng-route",
+  "_direct": true
+}

@@ -58,6 +58,7 @@
       <script src="bower_components/d3/d3.js"></script>
       <script src="bower_components/angular-responsive-tables/release/angular-responsive-tables.js"></script>
       <script src="bower_components/ng-material-floating-button/src/mfb-directive.js"></script>
+      <script src="bower_components/angular-route/angular-route.js"></script>
       <!-- endbower -->
     <!-- endbuild -->
 
@@ -66,8 +67,11 @@
 
         <script src="app/app.js"></script>
           <!-- injector:js -->
+          <script src="app/directives/accordion-nav.js"></script>
           <script src="app/directives/d3-graph-directives.js"></script>
+          <script src="app/directives/directive-examples.js"></script>
           <script src="app/directives/get-height-directive.js"></script>
+          <script src="app/directives/menu-items.js"></script>
           <script src="app/directives/resize-directive.js"></script>
           <script src="app/directives/scroll-header-directive.js"></script>
           <script src="app/main/main.controller.js"></script>
@@ -87,8 +91,109 @@
           <!-- endinjector -->
         <!-- endbuild -->
 
-    <!-- Add your site or application content here -->
-    <div id="uiViewContainer" ui-view></div>
+    <!-- Main Navigation Top Toolbar and SideNav -->
+    <div ng-controller="NavCtrl" layout="column" ng-cloak="" class="h100">
+
+      <md-toolbar style="background-color: #4A4C55;">
+        <div class="md-toolbar-tools">
+          <md-button class="md-icon-button" aria-label="Settings" ng-click="toggleLeft()" hide-gt-md="">
+            <i class="fa fa-bars"></i>
+          </md-button>
+          <h2 class="sc-logo" ng-click="goToState('launchpad')">
+            <span>SolarCity</span>
+          </h2>
+
+          <span flex=""></span>
+
+          <md-button ng-click="toggleRight()" ng-hide="isOpenRight()" class="md-icon-button">
+            <i class="fa fa-heart"></i>
+          </md-button>
+
+        </div>
+      </md-toolbar>
+
+      <section style="height: 90%" layout="row" flex="">
+
+
+
+        <md-sidenav class="site-sidenav md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+
+          <div ng-controller="LeftNavCtrl">
+            <md-toolbar style="background-color: #4A4C55;">
+              <div class="md-toolbar-tools">
+                <h2>
+                  <span>User Name</span>
+                </h2>
+                <span flex=""></span>
+
+                <md-button class="md-icon-button" aria-label="Close Left Nav" ng-click="close()" hide-gt-md="">
+                  <i class="fa fa-close"></i>
+                </md-button>
+              </div>
+            </md-toolbar>
+
+            <md-content flex role="navigation" ng-controller="NavItemsCtrl">
+              <ul class="docs-menu">
+                <li ng-repeat="section in menu.sections" class="parent-list-item {{section.className || ''}}" ng-class="{'parentActive' : isSectionSelected(section)}">
+                  <h2 class="menu-heading md-subhead" ng-if="section.type === 'heading'" id="heading_{{ section.name | nospace }}">
+                    {{section.name}}
+                  </h2>
+                  <menu-link section="section" ng-if="section.type === 'link' && !section.hidden"></menu-link>
+
+                  <menu-toggle section="section" ng-if="section.type === 'toggle' && !section.hidden"></menu-toggle>
+
+                  <ul ng-if="section.children" class="menu-nested-list">
+                    <li ng-repeat="child in section.children" ng-class="{'childActive' : isSectionSelected(child)}">
+                      <menu-link section="child" ng-if="child.type === 'link'"></menu-link>
+
+                      <menu-toggle section="child" ng-if="child.type === 'toggle'"></menu-toggle>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </md-content>
+          </div>
+
+
+        </md-sidenav>
+
+        <md-content class="h100" flex="" layout-padding="">
+
+          <div id="uiViewContainer" class="h100" ui-view>
+            <!-- THIS IS THE MAIN VIEW WINDOW ALL PAGES ARE RENDERED IN -->
+          </div>
+
+        </md-content>
+
+        <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
+
+          <md-toolbar class="md-theme-light" ng-controller="RightNavCtrl">
+            <h1 class="md-toolbar-tools">Sidenav Right</h1>
+            <md-button ng-click="toggleRight()" ng-hide="isOpenRight()" class="md-primary">
+              Toggle right
+            </md-button>
+          </md-toolbar>
+          <md-content layout-padding="">
+            <form>
+              <md-input-container>
+                <label for="testInput">Test input</label>
+                <input type="text" id="testInput" ng-model="data" md-autofocus="">
+              </md-input-container>
+            </form>
+            <md-button ng-click="close()" class="md-primary">
+              Close Sidenav Right
+            </md-button>
+          </md-content>
+
+        </md-sidenav>
+
+      </section>
+
+    </div>
+
+
+
+
 
 
 

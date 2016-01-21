@@ -93,6 +93,7 @@ app.controller('LaunchpadCtrl', function ($scope, $state, $timeout) {
       }
 
     },
+
     {
       "icon": "fa fa-bar-chart",
       "img": null,
@@ -117,12 +118,12 @@ app.controller('LaunchpadCtrl', function ($scope, $state, $timeout) {
         "col": 1
       }
     },
+
     {
-      "icon": null,
-      "img": 'assets/images/scarlett-johansson.png',
-      "title": "Scarlett Johansson Goes Solar",
-      "background": "blue",
-      "state": 'featureOne',
+      "icon": "fa fa-users",
+      "img": 'assets/images/softball.png',
+      "title": "Team Fusion",
+      "background": "pink",
       "span":
       {
         "row": 1,
@@ -176,26 +177,18 @@ app.controller('LaunchpadCtrl', function ($scope, $state, $timeout) {
       }
     },
 
+
+
     {
       "icon": null,
-      "img": 'assets/images/shopping.png',
-      "title": "Company Store",
-      "background": "gray",
-      "span":
-      {
-        "row": 2,
-        "col": 2
-      }
-    },
-    {
-      "icon": "fa fa-users",
-      "img": null,
-      "title": "Team Fusion",
-      "background": "pink",
+      "img": 'assets/images/scarlett-johansson.png',
+      "title": "Scarlett Johansson Goes Solar",
+      "background": "blue",
+      "state": 'featureOne',
       "span":
       {
         "row": 1,
-        "col": 1
+        "col": 2
       }
     },
 
@@ -232,7 +225,17 @@ app.controller('LaunchpadCtrl', function ($scope, $state, $timeout) {
         "col": 1
       }
     },
-
+    {
+      "icon": "fa fa-globe",
+      "img": null,
+      "title": "Earth Team",
+      "background": "green",
+      "span":
+      {
+        "row": 1,
+        "col": 1
+      }
+    },
 
 
     {
@@ -294,6 +297,19 @@ app.controller('LaunchpadCtrl', function ($scope, $state, $timeout) {
       {
         "row": 1,
         "col": 1
+      }
+    },
+
+
+    {
+      "icon": null,
+      "img": 'assets/images/shopping.png',
+      "title": "Company Store",
+      "background": "gray",
+      "span":
+      {
+        "row": 2,
+        "col": 2
       }
     },
 
