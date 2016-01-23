@@ -99,12 +99,13 @@ AccordionSideNav.config(["AngularyticsProvider",
   }
 ]);
 
-AccordionSideNav.factory("userDefinedMenu", function () {
+AccordionSideNav.service("userDefinedMenu", function () {
 
-  var menuItems = [
+  var sectionsArray = [
     {
       name: 'Launchpad',
       type: 'toggle',
+      active: false,
       pages: [
         {
           label: "Notifications",
@@ -119,6 +120,7 @@ AccordionSideNav.factory("userDefinedMenu", function () {
     {
       name: 'Some Cool Page',
       type: 'toggle',
+      active: false,
       pages: [
         {
           label: "Cool 1",
@@ -133,6 +135,7 @@ AccordionSideNav.factory("userDefinedMenu", function () {
     {
       name: 'Flavio Is Awesome',
       type: 'toggle',
+      active: false,
       pages: [
         {
           label: "Awesome 1",
@@ -149,12 +152,12 @@ AccordionSideNav.factory("userDefinedMenu", function () {
   var g = {};
 
   return {
-    sections: menuItems,
+    sections: sectionsArray,
     toggleSelectSection: function (e) {
       g.openedSection = g.openedSection === e ? null : e
     },
-    isSectionSelected: function (e) {
-      return g.openedSection === e
+    isSectionSelected: function (section) {
+      return g.openedSection === section
     },
     selectPage: function (e, t) {
       g.currentSection = e, g.currentPage = t
@@ -173,13 +176,13 @@ AccordionSideNav.directive("menuLink", function () {
     scope: {
       section: "="
     },
-    templateUrl: "partials/menu-link.tmpuserDefinedMenu.html",
-    link: function (e, t) {
+    templateUrl: "partials/menu-link.tmpl.html",
+    link: function (e, t, attrs) {
       var a = t.parent().controller();
       e.isSelected = function () {
         return a.isSelected(e.section)
       }, e.focusSection = function () {
-        a.autoFocusContent = !0
+        //a.autoFocusContent = !0
       }
     }
   }
@@ -191,7 +194,7 @@ AccordionSideNav.directive("menuToggle", ["$timeout",
       scope: {
         section: "="
       },
-      templateUrl: "partials/menu-toggle.tmpuserDefinedMenu.html",
+      templateUrl: "partials/menu-toggle.tmpl.html",
       link: function (t, a) {
         var n = a.parent().controller();
         t.isOpen = function () {
@@ -257,7 +260,7 @@ AccordionSideNav.controller("NavItemsCtrl", ["$scope", "$mdSidenav", "$timeout",
   function h(e) {
     e && e.preventDefault(),
       o(function () {
-        x.focus()
+        //x.focus()
       }, 90)
   }
 
@@ -315,19 +318,22 @@ AccordionSideNav.controller("NavItemsCtrl", ["$scope", "$mdSidenav", "$timeout",
 
 AccordionSideNav.run(["$templateCache",
   function (e) {
-    e.put("partials/menu-link.tmpuserDefinedMenu.html",
-      '<md-button\n    ng-class="{\'active\' : isSelected()}"\n    ng-href="{{section.url}}"\n    ng-click="focusSection()">\n  {{section | humanizeDoc}}\n  <span class="md-visually-hidden"\n    ng-if="isSelected()">\n    current page\n  </span>\n</md-button>\n'
+    e.put("partials/menu-link.tmpl.html",
+      '<md-button\n    ng-class="{\'is-active\' : isSelected()}"\n    ng-href="{{section.url}}"\n    ng-click="focusSection()">\n  {{section | humanizeDoc}}\n  <span class="md-visually-hidden"\n    ng-if="isSelected()">\n    current page\n  </span>\n</md-button>\n'
     )
   }
 ]);
 
 AccordionSideNav.run(["$templateCache",
   function (e) {
-    e.put("partials/menu-toggle.tmpuserDefinedMenu.html",
-      '<md-button class="md-button-toggle"\n  ng-click="toggle()"\n  aria-controls="docs-menu-{{section.name | nospace}}"\n  aria-expanded="{{isOpen()}}">\n  <div flex layout="row">\n    {{section.name}}\n    <span flex></span>\n    <span aria-hidden="true" class="md-toggle-icon"\n    ng-class="{\'toggled\' : isOpen()}">\n      <md-icon md-svg-src="md-toggle-arrow"></md-icon>\n    </span>\n  </div>\n  <span class="md-visually-hidden">\n    Toggle {{isOpen()? \'expanded\' : \'collapsed\'}}\n  </span>\n</md-button>\n\n<ul id="docs-menu-{{section.name | nospace}}" class="menu-toggle-list">\n  <li ng-repeat="page in section.pages">\n    <menu-link section="page"></menu-link>\n  </li>\n</ul>\n'
+    e.put("partials/menu-toggle.tmpl.html",
+      '<md-button class="md-button-toggle"\n ng-class="{\'section-toggled\' : isOpen()}"\n  ng-click="toggle()"\n  aria-controls="docs-menu-{{section.name | nospace}}"\n  aria-expanded="{{isOpen()}}">\n  <div flex layout="row">\n    {{section.name}}\n    <span flex></span>\n    <span aria-hidden="true" class="md-toggle-icon"\n    ng-class="{\'toggled\' : isOpen()}">\n      <md-icon md-svg-src="md-toggle-arrow"></md-icon>\n    </span>\n  </div>\n  <span class="md-visually-hidden">\n    Toggle {{isOpen()? \'expanded\' : \'collapsed\'}}\n  </span>\n</md-button>\n\n<ul id="docs-menu-{{section.name | nospace}}" class="menu-toggle-list">\n  <li ng-repeat="page in section.pages">\n    <menu-link section="page"></menu-link>\n  </li>\n</ul>\n'
     )
   }
 ]);
+
+
+
 
 AccordionSideNav.filter("nospace", function () {
   return function (e) {

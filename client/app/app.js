@@ -26,7 +26,6 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $mdG
       controller: 'LaunchpadCtrl'
     })
 
-
     //begin launchpad tab states
     .state('tab', {
       url: '/lp',
@@ -157,11 +156,19 @@ app.controller('MainCtrl', function ($scope, $state, $log) {
     $state.go(state);
   };
 
+
+
+
 });
 
 
+app.controller('ThemeCtrl', function ($scope) {
 
+  $scope.click = function(){
+    $scope.active = true;
+  }
 
+});
 
 
 app.controller('NavCtrl', function ($scope, $state, $timeout, $mdSidenav, $log) {
@@ -232,6 +239,19 @@ app.controller('RightNavCtrl', function ($scope, $timeout, $mdSidenav, $log) {
         $log.debug("close RIGHT is done");
       });
   };
+  $scope.data = false;
+  $scope.message = 'dark';
+  $scope.onChange = function(state) {
+    if(state){
+      $scope.message = 'light';
+    } else {
+      $scope.message = 'dark';
+    }
+
+  };
+
+
+
 });
 
 

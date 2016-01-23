@@ -1,16 +1,177 @@
 /* Global */
+:focus {
+  outline: 0;
+}
+
+/* Colors */
+
+%text-green {
+  color: #0B8340 !important;
+}
+
+%background-green {
+  background: #0B8340 !important;
+  background-color: #0B8340 !important;
+}
+
+
+%text-light {
+  color: #f1f1f1 !important;
+}
+
+%background-light {
+  background: #f1f1f1 !important;
+  background-color: #f1f1f1 !important;
+}
+
+%text-charcoal {
+  color: #5F5F5F !important;
+}
+
+%background-charcoal {
+  background: #5F5F5F !important;
+  background-color: #5F5F5F !important;
+}
+
+%border-bottom-light {
+  border-bottom: 1px solid #9C9C9C !important;
+}
+
+%border-top-light {
+  border-top: 1px solid #9C9C9C !important;
+}
+
+%border-bottom-charcoal {
+  border-bottom: 1px solid #cbcbcb !important;
+}
+
+%border-top-charcoal {
+  border-top: 1px solid #cbcbcb !important;
+}
+
+%drop-shadow {
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12) !important;
+}
+
+
+%inner-shadow {
+  -moz-box-shadow:    inset 0 0 10px rgba(0,0,0,0.16);
+  -webkit-box-shadow: inset 0 0 10px rgba(0,0,0,0.16);
+  box-shadow:         inset 0 0 10px rgba(0,0,0,0.16);
+
+}
+
+
+.text-charcoal {
+  @extend %text-charcoal;
+}
+
+.header-toolbar {
+  background-color: white !important;
+  height: 72px !important;
+  @extend %text-charcoal;
+}
+
+.main-toolbar {
+  @extend %background-charcoal;
+  @extend %text-light;
+  @extend %drop-shadow;
+  button.md-icon-button.md-button.md-ink-ripple {
+    font-size: 24px;
+  }
+  .circle-avatar {
+    margin-left: 12px;
+    width: 48px;
+    height: 48px;
+    border-radius: 24px;
+    overflow: hidden;
+    cursor: pointer;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+.sc-logo {
+  display: block;
+  width: 198px;
+  height: 51px;
+  margin-top: 10px;
+}
 
 .md-padding {
   padding: 6px;
 }
 
-//Main Nav
-.sc-logo {
+
+
+/* Themes */
+
+.theme-icon {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: -39px;
+  width: 40px;
+  height: 40px;
   cursor: pointer;
-  &:focus {
-    outline-color: #4A4C55;
+  @extend %background-charcoal;
+  border-right: 0;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  .fa {
+    width: 100%;
+    text-align: center;
+    line-height: 40px;
+    color: white;
   }
 }
+
+.theme-toggle {
+  position: absolute;
+  z-index: 1;
+  background-color: #CACACA;
+  width: 100px;
+  height: 65px;
+  top: 50%;
+  right: -120px;
+  margin-top: -33px;
+  -webkit-transition: right .2s;
+  transition: right .2s;
+  padding: 10px;
+  md-radio-button {
+    margin-bottom: 6px;
+  }
+  md-radio-button .md-on {
+    background-color: white;
+  }
+  md-radio-button.md-checked .md-off {
+    border-color: white;
+  }
+  md-radio-button.md-primary .md-on {
+    background-color: #5F5F5F;
+  }
+  md-radio-button.md-primary.md-checked .md-off {
+    border-color: #5F5F5F;
+  }
+}
+
+.theme-toggle-open {
+  right: 0;
+}
+
+
+
+/* Scrollbar */
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+
+
+
 
 //text
 .align-center {
@@ -385,7 +546,7 @@ body {
  * TYPE DEFAULTS
  ***************/
 a {
-  color: #4A4C55;
+  @extend %text-charcoal;
   text-decoration: none;
   font-weight: 400;
   border-bottom: 1px solid rgba(64, 84, 178, 0.25);
@@ -552,7 +713,7 @@ code.highlight {
 }
 
 code:not(.highlight) {
-  color: #4A4C55;
+  @extend %text-charcoal;
   margin-left: 1px;
   margin-right: 1px;
   -webkit-font-smoothing: auto;
@@ -566,7 +727,7 @@ code:not(.highlight) {
  * DOCS MENU
  ************/
 .site-sidenav {
-  background: #4A4C55;
+  @extend %background-charcoal;
 }
 .site-sidenav md-content {
   background: transparent;
@@ -581,13 +742,17 @@ code:not(.highlight) {
 .site-sidenav > * {
   min-width: 218px;
 }
+.docs-content {
+  @extend %border-top-light;
 
+}
 .docs-menu,
 .docs-menu ul {
   list-style: none;
   padding: 0;
   max-width: 100%;
   overflow-x: hidden;
+
 }
 .docs-menu li {
   margin: 0;
@@ -601,7 +766,7 @@ code:not(.highlight) {
   0px 0px 5px 1px rgba(0, 0, 0, 0.084);
 }
 .docs-menu > li {
-  border-bottom: 1px solid #5C5F6A;
+  @extend %border-bottom-light;
 }
 
 .docs-menu .md-button {
@@ -622,14 +787,18 @@ code:not(.highlight) {
 }
 .docs-menu .md-button:hover,
 .docs-menu .md-button:focus {
-  background: #5C5F6A !important;
+  @extend %background-green;
+  md-icon {
+    @extend %text-light;
+  }
 }
+
 .docs-menu .md-button md-icon {
   color: white;
 }
 
-.docs-menu md-select {
 
+.docs-menu md-select {
   /* Override md-select margins.  With margins the menu will look incorrect and causes mobile list
      to not be scrollable.
    */
@@ -680,12 +849,13 @@ code:not(.highlight) {
   -moz-transition-property: height;
   transition: 0.75s cubic-bezier(0.35, 0, 0.25, 1);
   transition-property: height;
+  @extend %inner-shadow;
 }
 .docs-menu .menu-toggle-list a.md-button {
   display: block;
   padding: 0 16px 0 32px;
-  background-color: #5C5F6A;
-  border-bottom: 1px solid #50535c;
+  @extend %background-light;
+  @extend %border-bottom-charcoal;
   text-transform: none;
   text-rendering: optimizeLegibility;
   font-weight: 500;
@@ -712,6 +882,12 @@ code:not(.highlight) {
   -webkit-transform: rotate(0deg);
 }
 
+.section-toggled {
+  @extend %background-green;
+}
+.is-active {
+  @extend %background-green;
+}
 /* End Docs Menu */
 
 .docs-logo {
@@ -733,13 +909,9 @@ code:not(.highlight) {
   transform: scale(1.2);
 }
 .nav-header {
-  background-color: #4A4C55;
-  background: linear-gradient(#185694, #4A4C55);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #185694), color-stop(1, #4A4C55));
-  background: -webkit-linear-gradient(top, #185694 0%, #4A4C55 100%);
-  background: -moz-linear-gradient(top, #185694 0%, #4A4C55 100%);
-  background: linear-gradient(top, #185694 0%, #4A4C55 100%);
-  border-bottom: 1px solid #5C5F6A;
+  @extend %background-charcoal;
+
+  @extend %border-bottom-light;
   flex-shrink: 0;
   z-index: 2;
 }
@@ -836,6 +1008,10 @@ md-tabs.demo-source-tabs md-tab-label {
 
 md-tabs.demo-source-tabs .active md-tab-label {
   color: #fff !important;
+}
+
+.active {
+  background-color: red;
 }
 
 .demo-source-tabs.ng-hide {
@@ -990,7 +1166,7 @@ ul.buckets li a:hover,
 ul.buckets li a:focus,
 ul.buckets li a:hover md-icon,
 ul.buckets li a:focus md-icon {
-  color: #4A4C55 !important;
+  @extend %text-charcoal;
   background-color: #ebebeb !important;
 }
 /************
@@ -1087,12 +1263,12 @@ md-content.demo-source-container > hljs > pre > code.highlight {
 }
 
 .dashed-bottom {
-  border-bottom: dashed 1px rgb(224, 224, 224);
+  @extend %border-bottom-light;
   padding-bottom: 10px;
 }
 
 .dashed-top {
-  border-top: dashed 1px rgb(224, 224, 224);
+  @extend %border-top-light;
   margin-top: 10px;
 }
 
@@ -1134,16 +1310,9 @@ ul.methods > li:first-child > *:first-child {
   display: none !important;
 }
 
-.version-picker {
-  background: #5C5F6A !important;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-  margin-bottom: 1px !important;
-}
-.version-picker .menu-toggle-list {
-  background: transparent !important;
-}
+
 md-icon.block {
-  color: #4A4C55;
+  @extend %text-charcoal;
   display: block;
   height: 50px;
   width:  50px;
@@ -1177,32 +1346,6 @@ docs-demo .doc-demo-content {
   margin-bottom: 0;
 }
 
-/* ---------------------
-*  Demo Workarounds
-*
-*  Necessary for component demos that append DOM subtrees outside of the demo app.
-*  Because our docs build prepends CSS classes onto custom demo styles provided for developers,
-*  these styles are needed for the docs website.
-*/
-.autocomplete-custom-template li {
-  border-bottom: 1px solid #ccc;
-  height: auto;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  white-space: normal;
-}
-.autocomplete-custom-template li:last-child {
-  border-bottom-width: 0;
-}
-.autocomplete-custom-template .item-title,
-.autocomplete-custom-template .item-metadata {
-  display: block;
-  line-height: 2;
-}
-.autocomplete-custom-template .item-title md-icon {
-  height: 18px;
-  width: 18px;
-}
 
 
 /* Styles for Windows High Contrast mode */
@@ -1248,5 +1391,12 @@ table.md-api-table  tr  td:first-child {
   padding: 20px;
 }
 
+#mainSectionWindow {
+  position: relative;
+  height: 100%;
+  overflow: scroll;
+}
 
-
+.main-window-view {
+  height: calc(100% - 142px);
+}

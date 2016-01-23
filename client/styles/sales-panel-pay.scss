@@ -5,7 +5,6 @@ body, html, #profilePage, #mainToolbar {
 }
 body {
   min-height: 100%;
-  background-color: #DCDCDC;
   position: relative;
 }
 
@@ -38,9 +37,7 @@ html {
 #launchpadSection {
   height: 100%;
   md-content {
-    background-color: #67B1D6;
     height: 100%;
-//    background-color: #DCDCDC;
   }
 
 }
