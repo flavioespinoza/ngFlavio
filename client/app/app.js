@@ -156,7 +156,7 @@ app.controller('MainCtrl', function ($scope, $state, $log) {
     $state.go(state);
   };
 
-
+ var test = 'test';
 
 
 });
